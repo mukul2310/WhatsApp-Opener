@@ -23,10 +23,12 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         EditText editText=findViewById(R.id.text1);
         Button btn=findViewById(R.id.btn);
+        final boolean[] flag = {false};
         final String[] number = new String[1];
-        if(getIntent().getAction()== ACTION_PROCESS_TEXT)
+        number[0]="";
+        if(getIntent().getAction()== Intent.ACTION_PROCESS_TEXT)
         {
-            number[0] =getIntent().getCharSequenceArrayExtra(EXTRA_PROCESS_TEXT).toString();
+            number[0] =getIntent().getCharSequenceArrayExtra(Intent.EXTRA_PROCESS_TEXT).toString();
         }
         btn.setOnClickListener(new View.OnClickListener()
         {
@@ -34,11 +36,15 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View v)
             {
                 number[0] =editText.getText().toString();
-                Log.i(String.valueOf(35), "onClick: "+ number[0]);
+//                Log.i(String.valueOf(35), "onClick: "+ number[0]);
+                flag[0] =true;
                 startWhatsApp(number[0]);
             }
         });
-//        startWhatsApp(number);
+        if(number[0]!=""&& !flag[0])
+        {
+            startWhatsApp(number[0]);
+        }
     }
 
     private void startWhatsApp(String number)
